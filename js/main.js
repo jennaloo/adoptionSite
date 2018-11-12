@@ -1,26 +1,3 @@
-var navBar = document.createElement('div');
-navBar.className = "row";
-document.body.appendChild(navBar);
-
-var logoSpace = document.createElement('div');
-logoSpace.className = "col-4 pb-5"
-logoSpace.style.backgroundColor = "#859C0F";
-navBar.appendChild(logoSpace);
-
-var logo = document.createElement('div');
-logo.innerHTML = "<img src='../img/pawPrint.png' width='50px' height='auto'>";
-logo.className = "m-2 pt-3 px-0";
-logoSpace.appendChild(logo);
-
-var title = document.createElement('div');
-title.className = "col-8 pb-5 pt-3"
-title.innerText = "Up for Adoption";
-title.id = "title";
-title.style.backgroundColor = "#859C0F";
-navBar.appendChild(title);
-
-document.body.style.backgroundColor = "#EDEDED";
-
 function Dog(someArray, name, image, sex, color, breed, age) {
     this.name = name;
     this.image = image;
@@ -31,26 +8,38 @@ function Dog(someArray, name, image, sex, color, breed, age) {
     someArray.push(this);
     this.populateHTML = function () {
         var container = document.createElement('div');
-        var name = document.createElement('h3');
-        name.innerText = this.name;
-        container.style.backgroundColor = "#EDEDED";
-        name.className = "text-center"
-        container.className = "d-inline-block col-xs-12 col-sm-6 col-md-6 col-xl-4 animated fadeInUp m-0";
+
+        //labels name, age, and sex of each animal below the container.
+        var info = document.createElement('h6');
+        info.innerHTML = "<p> " + this.name + "</p>" +
+            "<p>" + this.age + " " + this.sex + "</p>";
+        info.className = "text-center p-3"
+        info.style.fontFamily = "'Josefin Slab', serif";
+        info.style.fontSize = "20px";
+
+        //container for the images
+        var container = document.createElement('div');
+        container.className = "container-fluid d-inline-block col-xs-12 col-sm-6 col-md-4 col-xl-3 animated fadeIn text-center";
         container.id = "container";
         document.body.appendChild(container);
+
+        //attaches a link to the image container -- links to a product page
+        var anchorTags = document.createElement('a');
+        anchorTags.setAttribute("href", "" + this.site + "");
+        anchorTags.setAttribute("target", "_blank");
+        container.appendChild(anchorTags);
+
+        //specifications about how the image looks
         var item = document.createElement('div');
-        item.style.backgroundImage = "url(" + this.image + ")";
+        item.setAttribute("style", "background-image: url('" + this.image + "')");
         item.style.backgroundRepeat = "no-repeat";
         item.style.backgroundSize = "cover";
+        item.style.boxShadow = "5px 5px 10px lightgrey";
         item.id = "item";
-        item.className = "m-0"
-        item.style.border = "1px solid black"
-        container.appendChild(item);
-        container.appendChild(name);
-        var info = document.createElement('div');
-        info.className = "text-center";
-        info.innerText = '' + this.age + ' old ' + this.breed;
+        item.className = "mx-auto";
+        anchorTags.appendChild(item);
         container.appendChild(info);
+
     };
 };
 
@@ -69,6 +58,12 @@ var Gypsy = new Dog(myArray, 'Gypsy', 'img/pitbull.jpg', 'M', 'Black & White', '
 
 var Emma = new Dog(myArray, 'Emma', 'img/shepard.jpg', 'M', 'Black & Black & Brown', 'Shepard Mix', '2mo');
 
+
+var Dodger = new Dog(myArray, 'Dodger', 'img/dog.jpg', 'F', 'Black & Black & Brown', 'Shepard Mix', '1mo');
+
+var Fluff = new Dog(myArray, 'Dodger', 'img/fluff.jpg', 'F', 'Black & White', 'Unknown Mix', '3mo');
+
+
 for (i = 0; i < myArray.length; i++) {
     console.log(myArray[i].image);
     myArray[i].populateHTML();
@@ -77,7 +72,7 @@ for (i = 0; i < myArray.length; i++) {
 
 var footer = document.createElement('footer');
 footer.className = "col-12 footer p-0";
-footer.style.backgroundImage = "url('../img/grass.jpeg')"
+footer.style.backgroundImage = "url('img/grass.jpeg')"
 footer.style.backgroundRepeat = "repeat";
 footer.style.backgroundSize = "contain";
 footer.id = "footer";
